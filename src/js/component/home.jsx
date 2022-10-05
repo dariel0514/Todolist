@@ -11,6 +11,9 @@ const handleSubmit = (event) => {
 		text: input,
 		completed: false 
 	}
+	
+	setTasks([...tasks, addTask])
+	setInput("")
 }
 };
 
@@ -18,6 +21,9 @@ const deleteTasks = (id) => {
 	let filteredTask = tasks.filter( task => task.id !== id );
 	setTasks(filteredTask)
 }
+
+console.log("This is input: " ,input)
+console.log("This is tasks: " ,tasks)
 
 return(
 	<div className="text-center">
@@ -27,24 +33,27 @@ return(
 				<input
 					type="text"
 					value={input}
-					onChange={event => setInput(event.target.value)}
+					onChange={event => {
+						console.log(event.target.value)
+						setInput(event.target.value)}}
 					className="input-box"
 					placeHolder="What needs to be done?"
 					/>
 			</form>
 	<div className="list-items">
-		{tasks.map((task)=>{
+		{tasks.map((task)=>(
 			<div className="todo" key={task.id}>
 				<p>{task.text}
 				<button
 				className="button"
-				onClick={ () => deleteTask(task.id) }>
+				onClick={ () => deleteTasks(task.id) }>
 					&#10060;
 				</button>
 				</p>
 			</div>
-})}
-		<p className="counter">{ tasks.leng === 1 ? "one task left" : `tasks left: ${tasks.length}`}</p>
+)
+)}
+		<p className="counter">{ tasks.length > 0 ? `tasks left: ${tasks.length}` : "No Tasks, Please add a task"}</p>
 	</div>
 	</div>
 	</div>
